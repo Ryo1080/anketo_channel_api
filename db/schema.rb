@@ -10,6 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2020_08_10_054147) do
 
+  create_table "anketo_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "option", null: false
+    t.bigint "anketo_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["anketo_id"], name: "index_anketo_options_on_anketo_id"
+  end
+
+  create_table "anketos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "desctiption"
+    t.string "image"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "comment", null: false
+    t.bigint "anketo_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["anketo_id"], name: "index_comments_on_anketo_id"
+  end
+
+  create_table "votes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "ip", null: false
+    t.bigint "anketo_option_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["anketo_option_id"], name: "index_votes_on_anketo_option_id"
+  end
+
+  add_foreign_key "anketo_options", "anketos"
+  add_foreign_key "comments", "anketos"
+  add_foreign_key "votes", "anketo_options"
 end

@@ -1,0 +1,2 @@
+class Anketo < ApplicationRecord
+end
