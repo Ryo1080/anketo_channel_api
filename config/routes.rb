@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  scope :api do
+    scope :v1 do
+      resources :anketo, only: [:create, :update, :destroy]
+      resources :comment, only: [:create, :update, :destroy]
+      resources :vote, only: [:create]
+    end
+  end
 end
