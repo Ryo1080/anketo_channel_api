@@ -2,6 +2,19 @@ class AnketoController < ApplicationController
   include ResponseMethods
 
   def index
+    anketos = Anketo.all
+    response = { anketos: []}
+    anketos.each do |anketo|
+      response[:anketos].push(
+        {
+          title: anketo.title,
+          desctiption: anketo.desctiption,
+          image: anketo.image
+        }
+      )
+    end
+
+    render json: response
   end
 
   def show
