@@ -31,7 +31,8 @@ class AnketoController < ApplicationController
       response[:options].push(
         {
           id: option.id,
-          option: option.option
+          option: option.option,
+          votes: option.votes.size
         }
       )
     end
