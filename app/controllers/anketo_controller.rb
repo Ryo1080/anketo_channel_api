@@ -7,6 +7,7 @@ class AnketoController < ApplicationController
     anketos.each do |anketo|
       response[:anketos].push(
         {
+          id: anketo.id,
           title: anketo.title,
           desctiption: anketo.desctiption,
           image: anketo.image
@@ -27,7 +28,12 @@ class AnketoController < ApplicationController
       options: []
     }
     options.each do |option|
-      response[:options].push({ option: option.option })
+      response[:options].push(
+        {
+          id: option.id,
+          option: option.option
+        }
+      )
     end
 
     render json: response
