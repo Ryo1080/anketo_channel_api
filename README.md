@@ -17,7 +17,7 @@ services:
     build: ./anketo_channel_api
     ports:
       - ${BACKEND_PORT}:3000
-    command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -b ${BACKEND_HOST}"
+    command: /bin/sh -c " bundle install && rm -f /app/tmp/pids/server.pid && bundle exec rails s -b ${BACKEND_HOST}"
     volumes:
       - ./anketo_channel_api:/app
       - anketo_channel_api-bundle:/usr/local/bundle
