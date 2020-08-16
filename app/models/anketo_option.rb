@@ -1,4 +1,4 @@
 class AnketoOption < ApplicationRecord
-  has_many :vote, dependent: :destroy
+  has_many :votes, dependent: :destroy
   belongs_to :anketo
 end

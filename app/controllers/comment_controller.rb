@@ -2,7 +2,12 @@ class CommentController < ApplicationController
   include ResponseMethods
 
   def index
-    comments = Comment.all.map { |comment| { comment: comment.comment } }
+    comments = Comment.all.map do |comment|
+      {
+        id: comment.id,
+        comment: comment.comment
+      }
+    end
     response = { comments: comments }
     render json: response
   end
