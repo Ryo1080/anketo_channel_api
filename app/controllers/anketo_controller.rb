@@ -18,6 +18,19 @@ class AnketoController < ApplicationController
   end
 
   def show
+    anketo = Anketo.find(params[:id])
+    options = anketo.anketo_options
+    response = {
+      title: anketo.title,
+      desctiption: anketo.desctiption,
+      image: anketo.image,
+      options: []
+    }
+    options.each do |option|
+      response[:options].push({ option: option.option })
+    end
+
+    render json: response
   end
 
   def create
