@@ -58,10 +58,4 @@ class AnketoController < ApplicationController
       response_internal_server_error
     end
   end
-
-  def update
-  end
-
-  def destroy
-  end
 end
