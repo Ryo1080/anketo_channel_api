@@ -9,7 +9,7 @@ class AnketoController < ApplicationController
         {
           id: anketo.id,
           title: anketo.title,
-          desctiption: anketo.desctiption,
+          description: anketo.description,
           image: anketo.image
         }
       )
@@ -23,7 +23,7 @@ class AnketoController < ApplicationController
     options = anketo.anketo_options
     response = {
       title: anketo.title,
-      desctiption: anketo.desctiption,
+      description: anketo.description,
       image: anketo.image,
       options: []
     }
@@ -43,7 +43,7 @@ class AnketoController < ApplicationController
   def create
     anketo = Anketo.new(
       title: params[:title],
-      desctiption: params[:desctiption],
+      description: params[:description],
       image: params[:image]
     )
 
