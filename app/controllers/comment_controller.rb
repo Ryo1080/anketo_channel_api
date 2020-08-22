@@ -2,7 +2,8 @@ class CommentController < ApplicationController
   include ResponseMethods
 
   def index
-    comments = Comment.all.map do |comment|
+    anketo = Anketo.find(params[:anketo_id])
+    comments = anketo.comments.map do |comment|
       {
         id: comment.id,
         comment: comment.comment
