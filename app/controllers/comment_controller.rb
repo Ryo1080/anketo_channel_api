@@ -6,7 +6,8 @@ class CommentController < ApplicationController
     comments = anketo.comments.map do |comment|
       {
         id: comment.id,
-        comment: comment.comment
+        comment: comment.comment,
+        timestamp: comment.created_at,
       }
     end
     response = { comments: comments }
