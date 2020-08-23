@@ -2,7 +2,7 @@ class AnketoController < ApplicationController
   include ResponseMethods
 
   def index
-    anketos = Anketo.all
+    anketos = Anketo.all.order(created_at: :desc)
     response = { anketos: []}
     anketos.each do |anketo|
       response[:anketos].push(

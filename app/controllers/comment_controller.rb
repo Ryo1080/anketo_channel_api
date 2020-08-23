@@ -3,7 +3,7 @@ class CommentController < ApplicationController
 
   def index
     anketo = Anketo.find(params[:anketo_id])
-    comments = anketo.comments.map do |comment|
+    comments = anketo.comments.order(created_at: :desc).map do |comment|
       {
         id: comment.id,
         comment: comment.comment,
