@@ -3,7 +3,7 @@ class AnketoController < ApplicationController
 
   def index
     anketos = Anketo.all.order(created_at: :desc)
-    render json: build_anketo_response(anketos)
+    render json: build_anketos_response(anketos)
   end
 
   def show
@@ -13,6 +13,7 @@ class AnketoController < ApplicationController
       title: anketo.title,
       description: anketo.description,
       image: anketo.image,
+      category: anketo.category,
       options: []
     }
     options.each do |option|
@@ -32,10 +33,11 @@ class AnketoController < ApplicationController
     anketo = Anketo.new(
       title: params[:title],
       description: params[:description],
-      image: params[:image]
+      image: params[:image],
+      category: params[:categoryId],
     )
 
-    params[:anketo_options].each do |option|
+    params[:anketoOptions].each do |option|
       anketo.anketo_options.build(
         option: option
       )
@@ -67,14 +69,14 @@ class AnketoController < ApplicationController
         .order(Arel.sql('count(votes.id) desc'))
     end
 
-    # TODO categoryで検索
+    anketos = anketos.where(category: params[:categoryId]) unless params[:categoryId].to_i == 0
 
-    render json: build_anketo_response(anketos)
+    render json: build_anketos_response(anketos)
   end
 
   private
 
-    def build_anketo_response(anketos)
+    def build_anketos_response(anketos)
       response = { anketos: []}
       anketos.each do |anketo|
         response[:anketos].push(
@@ -82,6 +84,7 @@ class AnketoController < ApplicationController
             id: anketo.id,
             title: anketo.title,
             description: anketo.description,
+            category: anketo.category,
             image: anketo.image
           }
         )

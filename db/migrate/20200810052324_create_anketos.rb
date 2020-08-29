@@ -4,6 +4,7 @@ class CreateAnketos < ActiveRecord::Migration[6.0]
       t.string :title, null: false
       t.string :description
       t.string :image
+      t.integer :category, null: false
       t.timestamps
     end
   end

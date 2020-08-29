@@ -2,7 +2,7 @@ class VoteController < ApplicationController
   include ResponseMethods
 
   def create
-    option = AnketoOption.find(params[:option_id])
+    option = AnketoOption.find(params[:optionId])
     vote = option.votes.build(ip: params[:ip])
 
     if vote.save
