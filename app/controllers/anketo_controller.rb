@@ -3,19 +3,7 @@ class AnketoController < ApplicationController
 
   def index
     anketos = Anketo.all.order(created_at: :desc)
-    response = { anketos: []}
-    anketos.each do |anketo|
-      response[:anketos].push(
-        {
-          id: anketo.id,
-          title: anketo.title,
-          description: anketo.description,
-          image: anketo.image
-        }
-      )
-    end
-
-    render json: response
+    render json: build_anketo_response(anketos)
   end
 
   def show
@@ -59,4 +47,46 @@ class AnketoController < ApplicationController
       response_internal_server_error
     end
   end
+
+  def search
+    anketos = Anketo.where('title LIKE ?',"%#{params[:keyword]}%")
+
+    case params[:sortId].to_i
+    when 0
+      anketos = anketos.order(created_at: :desc)
+    when 1
+      anketos = anketos
+        .left_joins(anketo_options: :votes)
+        .group("anketos.id")
+        .order(Arel.sql('count(votes.id) desc'))
+        .where(created_at: Time.now.months_ago(1).beginning_of_day...Time.now)
+    when 2
+      anketos = anketos
+        .left_joins(anketo_options: :votes)
+        .group("anketos.id")
+        .order(Arel.sql('count(votes.id) desc'))
+    end
+
+    # TODO categoryで検索
+
+    render json: build_anketo_response(anketos)
+  end
+
+  private
+
+    def build_anketo_response(anketos)
+      response = { anketos: []}
+      anketos.each do |anketo|
+        response[:anketos].push(
+          {
+            id: anketo.id,
+            title: anketo.title,
+            description: anketo.description,
+            image: anketo.image
+          }
+        )
+      end
+
+      response
+    end
 end
