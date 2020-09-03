@@ -13,7 +13,7 @@ class AnketoController < ApplicationController
     response = {
       title: anketo.title,
       description: anketo.description,
-      image: anketo.image,
+      image: anketo.image.to_s,
       category: anketo.category,
       options: []
     }
@@ -34,7 +34,6 @@ class AnketoController < ApplicationController
     anketo = Anketo.new(
       title: params[:title],
       description: params[:description],
-      # TODO 画像をS3に保存
       image: params[:image],
       category: params[:categoryId],
     )
@@ -86,6 +85,7 @@ class AnketoController < ApplicationController
             id: anketo.id,
             title: anketo.title,
             description: anketo.description,
+            image: anketo.image.to_s,
             category: anketo.category,
             image: anketo.image
           }
