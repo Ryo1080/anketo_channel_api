@@ -1,4 +1,6 @@
 class Anketo < ApplicationRecord
+  mount_uploader :image, ImageUploader
+
   validates :title,
     presence: true,
     length: { maximum: 250 }

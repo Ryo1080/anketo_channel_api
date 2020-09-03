@@ -8,6 +8,7 @@ class AnketoController < ApplicationController
 
   def show
     anketo = Anketo.find(params[:id])
+
     options = anketo.anketo_options
     response = {
       title: anketo.title,
@@ -33,6 +34,7 @@ class AnketoController < ApplicationController
     anketo = Anketo.new(
       title: params[:title],
       description: params[:description],
+      # TODO 画像をS3に保存
       image: params[:image],
       category: params[:categoryId],
     )
