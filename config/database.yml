@@ -50,5 +50,6 @@ test:
 production:
   <<: *default
   database: anketo_channel_api_production
-  username: anketo_channel_api
+  username: root
   password: <%= ENV['ANKETO_CHANNEL_API_DATABASE_PASSWORD'] %>
+  host: localhost
