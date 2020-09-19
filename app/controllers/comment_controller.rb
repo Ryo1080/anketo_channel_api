@@ -7,7 +7,7 @@ class CommentController < ApplicationController
       {
         id: comment.id,
         comment: comment.comment,
-        timestamp: comment.created_at,
+        timestamp: comment.created_at.strftime("%Y年%m月%d日 %H:%M:%S"),
       }
     end
     response = { comments: comments }
