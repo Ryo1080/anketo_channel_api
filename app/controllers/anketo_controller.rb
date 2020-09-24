@@ -51,6 +51,10 @@ class AnketoController < ApplicationController
     end
   end
 
+  def destroy
+    # TODO anketo削除処理
+  end
+
   def search
     anketos = Anketo.where('title LIKE ?',"%#{params[:keyword]}%")
 
@@ -85,9 +89,9 @@ class AnketoController < ApplicationController
             id: anketo.id,
             title: anketo.title,
             description: anketo.description,
-            image: anketo.image.to_s,
             category: anketo.category,
-            image: anketo.image
+            image: anketo.image,
+            voteCount: anketo.anketo_options.joins(:votes).count
           }
         )
       end
