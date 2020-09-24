@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   scope :api do
     scope :v1 do
       get 'anketo/search', to: 'anketo#search'
-      resources :anketo, only: [:index, :show, :create] do
+      resources :anketo, only: [:index, :show, :create, :destroy] do
         resources :comment, only: [:index, :create]
       end
       resources :vote, only: [:create]
