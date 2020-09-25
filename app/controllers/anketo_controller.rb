@@ -88,7 +88,6 @@ class AnketoController < ApplicationController
           {
             id: anketo.id,
             title: anketo.title,
-            description: anketo.description,
             category: anketo.category,
             image: anketo.image,
             voteCount: anketo.anketo_options.joins(:votes).count
