@@ -11,6 +11,7 @@ class AnketoController < ApplicationController
 
     options = anketo.anketo_options
     response = {
+      id: anketo.id,
       title: anketo.title,
       description: anketo.description,
       image: anketo.image.to_s,
