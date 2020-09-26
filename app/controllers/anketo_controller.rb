@@ -82,6 +82,8 @@ class AnketoController < ApplicationController
   private
 
     def build_anketos_response(anketos)
+      vote_counts = AnketoOption.joins(:votes).group(:anketo_id).count('votes.id')
+
       response = { anketos: []}
       anketos.each do |anketo|
         response[:anketos].push(
@@ -90,7 +92,7 @@ class AnketoController < ApplicationController
             title: anketo.title,
             category: anketo.category,
             image: anketo.image,
-            voteCount: anketo.anketo_options.joins(:votes).count
+            voteCount: vote_counts[anketo.id] || 0
           }
         )
       end
