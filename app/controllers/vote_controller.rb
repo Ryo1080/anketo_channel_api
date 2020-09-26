@@ -2,8 +2,16 @@ class VoteController < ApplicationController
   include ResponseMethods
 
   def create
-    option = AnketoOption.find(params[:optionId])
-    vote = option.votes.build(ip: params[:ip])
+    ip = request.remote_ip
+    already_vote = Anketo.where(id: params[:anketoId])
+      .eager_load(anketo_options: :votes)
+      .where(votes: {ip: ip})
+      .exists?
+
+    return render json: { alreadyVote: already_vote } if already_vote
+
+    option = AnketoOption.find(params[:selectedOptionId])
+    vote = option.votes.build(ip: ip)
 
     if vote.save
       response_success
