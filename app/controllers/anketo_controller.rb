@@ -1,8 +1,27 @@
 class AnketoController < ApplicationController
   include ResponseMethods
 
-  def index
-    anketos = Anketo.all.order(created_at: :desc)
+  def search
+    anketos = Anketo.where('title LIKE ?',"%#{params[:keyword]}%")
+
+    case params[:sortId].to_i
+    when 0
+      anketos = anketos.order(created_at: :desc)
+    when 1
+      anketos = anketos
+        .left_joins(anketo_options: :votes)
+        .group("anketos.id")
+        .order(Arel.sql('count(votes.id) desc'))
+        .where(created_at: Time.now.months_ago(1).beginning_of_day...Time.now)
+    when 2
+      anketos = anketos
+        .left_joins(anketo_options: :votes)
+        .group("anketos.id")
+        .order(Arel.sql('count(votes.id) desc'))
+    end
+
+    anketos = anketos.where(category: params[:categoryId]) unless params[:categoryId].to_i == 0
+
     render json: build_anketos_response(anketos)
   end
 
@@ -54,30 +73,6 @@ class AnketoController < ApplicationController
 
   def destroy
     # TODO anketo削除処理
-  end
-
-  def search
-    anketos = Anketo.where('title LIKE ?',"%#{params[:keyword]}%")
-
-    case params[:sortId].to_i
-    when 0
-      anketos = anketos.order(created_at: :desc)
-    when 1
-      anketos = anketos
-        .left_joins(anketo_options: :votes)
-        .group("anketos.id")
-        .order(Arel.sql('count(votes.id) desc'))
-        .where(created_at: Time.now.months_ago(1).beginning_of_day...Time.now)
-    when 2
-      anketos = anketos
-        .left_joins(anketo_options: :votes)
-        .group("anketos.id")
-        .order(Arel.sql('count(votes.id) desc'))
-    end
-
-    anketos = anketos.where(category: params[:categoryId]) unless params[:categoryId].to_i == 0
-
-    render json: build_anketos_response(anketos)
   end
 
   private
