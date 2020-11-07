@@ -1,6 +1,10 @@
 # anketo_channel
 
-## Build Setup
+## Production
+
+https://www.anketo-channel.com/
+
+## Development
 
 - 親ディレクトリにdocker-compose.ymlを配置
 ```
