@@ -3,15 +3,7 @@ class CommentController < ApplicationController
 
   def index
     anketo = Anketo.find(params[:anketo_id])
-    comments = anketo.comments.order(created_at: :desc).map do |comment|
-      {
-        id: comment.id,
-        comment: comment.comment,
-        timestamp: comment.created_at.strftime("%Y年%m月%d日 %H:%M:%S"),
-      }
-    end
-    response = { comments: comments }
-    render json: response
+    render json: Comment.build_index_response(anketo: anketo)
   end
 
   def create
