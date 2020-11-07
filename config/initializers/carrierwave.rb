@@ -1,9 +1,9 @@
 CarrierWave.configure do |config|
   config.fog_credentials = {
-    provider:              'AWS',                                      # required
-    aws_access_key_id:     'AKIARKME5KIMI27WD6JA',                     # required unless using use_iam_profile
-    aws_secret_access_key: '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', # required unless using use_iam_profile
-    region:                'ap-northeast-1',                           # optional, defaults to 'us-east-1'
+    provider:              'AWS',
+    aws_access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+    region:                ENV['AWS_DEFAULT_REGION'],
   }
-  config.fog_directory  = 'anketo-channel-s3'                          # required
+  config.fog_directory = ENV['AWS_S3_BUCKET_NAME']
 end
